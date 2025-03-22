@@ -32,10 +32,10 @@ public class AccountController {
     public ResponseEntity<?> transferMoney(@RequestBody TransferRequest transferRequest, Authentication authentication) {
         try {
             accountService.transfer(
-                    transferRequest.getSourceAccountId(),
-                    transferRequest.getDestinationAccountId(),
+                    transferRequest.getSourceAccountNumber(),
+                    transferRequest.getDestinationAccountNumber(),
                     transferRequest.getAmount(),
-                    authentication // Truyền thông tin người dùng hiện tại
+                    authentication
             );
             return ResponseEntity.ok("Chuyển tiền thành công");
         } catch (RuntimeException e) {

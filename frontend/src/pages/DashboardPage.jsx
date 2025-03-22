@@ -74,10 +74,21 @@ const DashboardPage = () => {
     setLoading(true);
 
     try {
-      // Nếu chỉ có một tài khoản, tự động gán sourceAccountId
+      // Nếu chỉ có một tài khoản, tự động gán sourceAccountNumber
       if (accounts.length === 1) {
-        values.sourceAccountId = accounts[0].id;
+        values.sourceAccountNumber = accounts[0].accountNumber; // Sử dụng accountNumber
+      } else {
+        // Tìm accountNumber từ accountId được chọn
+        const selectedAccount = accounts.find(account => account.id === values.sourceAccountId);
+        if (selectedAccount) {
+          values.sourceAccountNumber = selectedAccount.accountNumber; // Gán accountNumber
+        } else {
+          throw new Error('Tài khoản nguồn không hợp lệ!');
+        }
       }
+
+      // Xóa sourceAccountId trước khi gửi
+      delete values.sourceAccountId;
 
       console.log('Dữ liệu gửi đến API:', values);
 
@@ -159,24 +170,35 @@ const DashboardPage = () => {
               name="sourceAccountId"
               label="Tài khoản nguồn"
               rules={[{ required: true, message: 'Vui lòng chọn tài khoản nguồn!' }]}
+              initialValue={undefined} // Không cần giá trị mặc định khi có nhiều tài khoản
             >
               <Select placeholder="Chọn tài khoản nguồn">
                 {accounts.map((account) => (
                   <Option key={account.id} value={account.id}>
-                    {account.accountNumber} - {account.balance.toLocaleString()}
+                    {account.accountNumber} - {account.balance.toLocaleString()} {account.currency}
                   </Option>
                 ))}
               </Select>
             </Form.Item>
           ) : (
-            <p>
-              Tài khoản nguồn: {accounts[0]?.accountNumber} - {accounts[0]?.balance.toLocaleString()}
-            </p>
+            <>
+              {/* Hiển thị thông tin tài khoản nguồn */}
+              <Form.Item label="Tài khoản nguồn">
+                <Input
+                  value={`${accounts[0]?.accountNumber} - ${accounts[0]?.balance.toLocaleString()} ${accounts[0]?.currency}`}
+                  disabled
+                />
+              </Form.Item>
+              {/* Ẩn trường để gửi account id */}
+              <Form.Item name="sourceAccountId" initialValue={accounts[0]?.id} hidden>
+                <Input />
+              </Form.Item>
+            </>
           )}
           <Form.Item
-            name="destinationAccountId"
-            label="ID tài khoản đích"
-            rules={[{ required: true, message: 'Vui lòng nhập ID tài khoản đích!' }]}
+            name="destinationAccountNumber"
+            label="Số tài khoản đích"
+            rules={[{ required: true, message: 'Vui lòng nhập số tài khoản đích!' }]}
           >
             <Input />
           </Form.Item>

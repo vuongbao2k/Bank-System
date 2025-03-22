@@ -18,12 +18,12 @@ public class AccountService {
         return accountRepository.findByUserUsername(username);
     }
 
-    public void transfer(Long sourceAccountId, Long destinationAccountId, Double amount, Authentication authentication) {
+    public void transfer(String sourceAccountNumber, String destinationAccountNumber, Double amount, Authentication authentication) {
         // Lấy username từ người dùng hiện tại
         String currentUsername = authentication.getName();
 
-        // Lấy tài khoản nguồn
-        Account sourceAccount = accountRepository.findById(sourceAccountId)
+        // Lấy tài khoản nguồn dựa trên accountNumber
+        Account sourceAccount = accountRepository.findByAccountNumber(sourceAccountNumber)
                 .orElseThrow(() -> new RuntimeException("Tài khoản nguồn không tồn tại"));
 
         // Kiểm tra xem tài khoản nguồn có thuộc về người dùng hiện tại không
@@ -31,8 +31,8 @@ public class AccountService {
             throw new RuntimeException("Bạn không có quyền thực hiện giao dịch từ tài khoản này");
         }
 
-        // Lấy tài khoản đích
-        Account destinationAccount = accountRepository.findById(destinationAccountId)
+        // Lấy tài khoản đích dựa trên accountNumber
+        Account destinationAccount = accountRepository.findByAccountNumber(destinationAccountNumber)
                 .orElseThrow(() -> new RuntimeException("Tài khoản đích không tồn tại"));
 
         // Kiểm tra số dư tài khoản nguồn
