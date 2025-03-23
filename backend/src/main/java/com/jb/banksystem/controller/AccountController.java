@@ -2,6 +2,7 @@ package com.jb.banksystem.controller;
 
 import com.jb.banksystem.dto.TransferRequest;
 import com.jb.banksystem.entity.Account;
+import com.jb.banksystem.entity.Transaction;
 import com.jb.banksystem.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -31,13 +32,16 @@ public class AccountController {
     @PostMapping("/transfer")
     public ResponseEntity<?> transferMoney(@RequestBody TransferRequest transferRequest, Authentication authentication) {
         try {
-            accountService.transfer(
+            // Thực hiện chuyển tiền và lưu giao dịch
+            Transaction transaction = accountService.transfer(
                     transferRequest.getSourceAccountNumber(),
                     transferRequest.getDestinationAccountNumber(),
                     transferRequest.getAmount(),
                     authentication
             );
-            return ResponseEntity.ok("Chuyển tiền thành công");
+
+            // Trả về thông tin giao dịch
+            return ResponseEntity.ok(transaction);
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

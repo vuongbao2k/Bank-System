@@ -36,3 +36,11 @@ export const transferMoney = async (token, transferData) => {
     throw error.response.data;
   }
 };
+
+export const getTransactionHistory = async (accountNumber) => {
+  const token = localStorage.getItem('token');
+  const response = await axios.get(`http://localhost:1010/api/transactions/${accountNumber}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return response.data;
+};

@@ -1,11 +1,14 @@
 package com.jb.banksystem.service;
 
 import com.jb.banksystem.entity.Account;
+import com.jb.banksystem.entity.Transaction;
 import com.jb.banksystem.repository.AccountRepository;
+import com.jb.banksystem.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -14,11 +17,14 @@ public class AccountService {
     @Autowired
     private AccountRepository accountRepository;
 
+    @Autowired
+    private TransactionRepository transactionRepository; // Thêm TransactionRepository
+
     public List<Account> getAccountsByUsername(String username) {
         return accountRepository.findByUserUsername(username);
     }
 
-    public void transfer(String sourceAccountNumber, String destinationAccountNumber, Double amount, Authentication authentication) {
+    public Transaction transfer(String sourceAccountNumber, String destinationAccountNumber, Double amount, Authentication authentication) {
         // Lấy username từ người dùng hiện tại
         String currentUsername = authentication.getName();
 
@@ -44,8 +50,20 @@ public class AccountService {
         sourceAccount.setBalance(sourceAccount.getBalance() - amount);
         destinationAccount.setBalance(destinationAccount.getBalance() + amount);
 
-        // Lưu thay đổi
+        // Lưu thay đổi vào cơ sở dữ liệu
         accountRepository.save(sourceAccount);
         accountRepository.save(destinationAccount);
+
+        // Lưu thông tin giao dịch
+        Transaction transaction = new Transaction();
+        transaction.setSourceAccountNumber(sourceAccountNumber);
+        transaction.setDestinationAccountNumber(destinationAccountNumber);
+        transaction.setAmount(amount);
+        transaction.setStatus("Thành công");
+        transaction.setTimestamp(LocalDateTime.now());
+        transactionRepository.save(transaction); // Lưu giao dịch vào cơ sở dữ liệu
+
+        // Trả về thông tin giao dịch
+        return transaction;
     }
 }

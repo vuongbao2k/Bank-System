@@ -12,13 +12,12 @@ const DashboardPage = () => {
   const [accounts, setAccounts] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [transactions, setTransactions] = useState([]); // Không cần state selectedAccount
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUserProfile = async () => {
       const token = localStorage.getItem('token');
-      console.log('Token:', token);
-
       if (!token) {
         message.error('Bạn chưa đăng nhập!');
         navigate('/');
@@ -29,7 +28,6 @@ const DashboardPage = () => {
         const response = await axios.get('http://localhost:1010/adminuser/get-profile', {
           headers: { Authorization: `Bearer ${token}` },
         });
-        console.log('User data:', response.data);
         if (response.data.ourUsers) {
           setUser(response.data.ourUsers);
         } else {
@@ -63,6 +61,54 @@ const DashboardPage = () => {
     fetchAccounts();
   }, [navigate]);
 
+  useEffect(() => {
+    const fetchTransactions = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const allTransactions = [];
+
+        for (const account of accounts) {
+          // Lấy lịch sử giao dịch mà tài khoản là nguồn (Chuyển tiền)
+          const sentTransactions = await axios.get(
+            `http://localhost:1010/api/transactions/source/${account.accountNumber}`,
+            {
+              headers: { Authorization: `Bearer ${token}` },
+            }
+          );
+          sentTransactions.data.forEach((transaction) => {
+            transaction.type = 'Chuyển tiền';
+          });
+
+          // Lấy lịch sử giao dịch mà tài khoản là đích (Nhận tiền)
+          const receivedTransactions = await axios.get(
+            `http://localhost:1010/api/transactions/destination/${account.accountNumber}`,
+            {
+              headers: { Authorization: `Bearer ${token}` },
+            }
+          );
+          receivedTransactions.data.forEach((transaction) => {
+            transaction.type = 'Nhận tiền';
+          });
+
+          // Gộp giao dịch gửi và nhận
+          allTransactions.push(...sentTransactions.data, ...receivedTransactions.data);
+        }
+
+        // Sắp xếp giao dịch theo thời gian (mới nhất trước)
+        allTransactions.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
+        setTransactions(allTransactions);
+      } catch (error) {
+        console.error('Lỗi khi lấy lịch sử giao dịch:', error);
+        message.error('Không thể lấy lịch sử giao dịch!');
+      }
+    };
+
+    if (accounts.length > 0) {
+      fetchTransactions();
+    }
+  }, [accounts]);
+
   const handleLogout = () => {
     localStorage.removeItem('token');
     message.success('Đăng xuất thành công!');
@@ -74,28 +120,22 @@ const DashboardPage = () => {
     setLoading(true);
 
     try {
-      // Nếu chỉ có một tài khoản, tự động gán sourceAccountNumber
       if (accounts.length === 1) {
-        values.sourceAccountNumber = accounts[0].accountNumber; // Sử dụng accountNumber
+        values.sourceAccountNumber = accounts[0].accountNumber;
       } else {
-        // Tìm accountNumber từ accountId được chọn
         const selectedAccount = accounts.find(account => account.id === values.sourceAccountId);
         if (selectedAccount) {
-          values.sourceAccountNumber = selectedAccount.accountNumber; // Gán accountNumber
+          values.sourceAccountNumber = selectedAccount.accountNumber;
         } else {
           throw new Error('Tài khoản nguồn không hợp lệ!');
         }
       }
 
-      // Xóa sourceAccountId trước khi gửi
       delete values.sourceAccountId;
-
-      console.log('Dữ liệu gửi đến API:', values);
 
       await transferMoney(token, values);
       message.success('Chuyển tiền thành công!');
 
-      // Gọi lại API để cập nhật danh sách tài khoản
       const updatedAccounts = await getAccounts(token);
       setAccounts(updatedAccounts);
 
@@ -132,13 +172,49 @@ const DashboardPage = () => {
     },
   ];
 
+  const transactionColumns = [
+    {
+      title: 'Loại giao dịch',
+      dataIndex: 'type',
+      key: 'type',
+    },
+    {
+      title: 'Số tài khoản nguồn',
+      dataIndex: 'sourceAccountNumber',
+      key: 'sourceAccountNumber',
+    },
+    {
+      title: 'Số tài khoản đích',
+      dataIndex: 'destinationAccountNumber',
+      key: 'destinationAccountNumber',
+    },
+    {
+      title: 'Số tiền',
+      dataIndex: 'amount',
+      key: 'amount',
+      render: (amount) => amount.toLocaleString(),
+    },
+    {
+      title: 'Trạng thái',
+      dataIndex: 'status',
+      key: 'status',
+    },
+    {
+      title: 'Thời gian',
+      dataIndex: 'timestamp',
+      key: 'timestamp',
+      sorter: (a, b) => new Date(a.timestamp) - new Date(b.timestamp), // Sắp xếp theo thời gian
+      render: (timestamp) => new Date(timestamp).toLocaleString(), // Hiển thị thời gian ở định dạng dễ đọc
+    },
+  ];
+
   return (
     <div style={{ maxWidth: '800px', margin: '100px auto', textAlign: 'center' }}>
       <Title level={2}>Dashboard</Title>
       <div style={{ marginBottom: '20px', textAlign: 'left' }}>
         {user ? (
           <div>
-            <p><strong>Tên người dùng:</strong> {user.username}</p> {/* Sử dụng username */}
+            <p><strong>Tên người dùng:</strong> {user.username}</p>
             <p><strong>Email:</strong> {user.email}</p>
           </div>
         ) : (
@@ -165,36 +241,20 @@ const DashboardPage = () => {
         footer={null}
       >
         <Form onFinish={handleTransfer} layout="vertical">
-          {accounts.length > 1 ? (
-            <Form.Item
-              name="sourceAccountId"
-              label="Tài khoản nguồn"
-              rules={[{ required: true, message: 'Vui lòng chọn tài khoản nguồn!' }]}
-              initialValue={undefined} // Không cần giá trị mặc định khi có nhiều tài khoản
-            >
-              <Select placeholder="Chọn tài khoản nguồn">
-                {accounts.map((account) => (
-                  <Option key={account.id} value={account.id}>
-                    {account.accountNumber} - {account.balance.toLocaleString()} {account.currency}
-                  </Option>
-                ))}
-              </Select>
-            </Form.Item>
-          ) : (
-            <>
-              {/* Hiển thị thông tin tài khoản nguồn */}
-              <Form.Item label="Tài khoản nguồn">
-                <Input
-                  value={`${accounts[0]?.accountNumber} - ${accounts[0]?.balance.toLocaleString()} ${accounts[0]?.currency}`}
-                  disabled
-                />
-              </Form.Item>
-              {/* Ẩn trường để gửi account id */}
-              <Form.Item name="sourceAccountId" initialValue={accounts[0]?.id} hidden>
-                <Input />
-              </Form.Item>
-            </>
-          )}
+          <Form.Item
+            name="sourceAccountId"
+            label="Tài khoản nguồn"
+            rules={[{ required: true, message: 'Vui lòng chọn tài khoản nguồn!' }]}
+            initialValue={undefined}
+          >
+            <Select placeholder="Chọn tài khoản nguồn">
+              {accounts.map((account) => (
+                <Option key={account.id} value={account.id}>
+                  {account.accountNumber} - {account.balance.toLocaleString()} {account.currency}
+                </Option>
+              ))}
+            </Select>
+          </Form.Item>
           <Form.Item
             name="destinationAccountNumber"
             label="Số tài khoản đích"
@@ -216,6 +276,16 @@ const DashboardPage = () => {
           </Form.Item>
         </Form>
       </Modal>
+      <div>
+        <h2>Lịch Sử Giao Dịch</h2>
+        <Table
+          dataSource={transactions} // Hiển thị toàn bộ giao dịch
+          columns={transactionColumns}
+          rowKey={(record) => `${record.id}-${record.type}`}
+          pagination={false}
+          bordered
+        />
+      </div>
     </div>
   );
 };
