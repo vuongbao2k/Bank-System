@@ -7,8 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -34,6 +32,22 @@ public class BankService {
     public ReqRes register(ReqRes registrationRequest) {
         ReqRes reqRes = new ReqRes();
         try {
+            // Kiểm tra xem có người dùng với username đã tồn tại không
+            Optional<OurUsers> existingUserByUsername = usersRepo.findByUsername(registrationRequest.getUsername());
+            if (existingUserByUsername.isPresent()) {
+                reqRes.setStatusCode(400);
+                reqRes.setError("Username already exists!");
+                return reqRes;
+            }
+
+            // Kiểm tra xem có người dùng với email đã tồn tại không
+            Optional<OurUsers> existingUserByEmail = usersRepo.findByEmail(registrationRequest.getEmail());
+            if (existingUserByEmail.isPresent()) {
+                reqRes.setStatusCode(400);
+                reqRes.setError("Email already exists!");
+                return reqRes;
+            }
+
             OurUsers ourUser = new OurUsers();
             ourUser.setUsername(registrationRequest.getUsername());
             ourUser.setEmail(registrationRequest.getEmail());
@@ -128,13 +142,6 @@ public class BankService {
     public ReqRes getAllUsers() {
         ReqRes reqRes = new ReqRes();
         try {
-            // Kiểm tra quyền trước khi truy cập
-            if (!hasAdminRole()) {
-                reqRes.setStatusCode(403);  // Forbidden
-                reqRes.setMessage("You do not have permission to view all users");
-                return reqRes;
-            }
-
             List<OurUsers> results = usersRepo.findAll();
             if (!results.isEmpty()) {
                 reqRes.setStatusCode(200);
@@ -201,6 +208,7 @@ public class BankService {
                 }
 
                 OurUsers savedUser = usersRepo.save(existingUser);
+                savedUser.setPassword(null);
                 reqRes.setOurUsers(savedUser);
                 reqRes.setStatusCode(200);
                 reqRes.setMessage("Successfully updated user with id " + userId);
@@ -220,7 +228,9 @@ public class BankService {
         try {
             Optional<OurUsers> usersOptional = usersRepo.findByUsername(userName);
             if (usersOptional.isPresent()) {
-                reqRes.setOurUsers(usersOptional.get());
+                OurUsers existingUser = usersOptional.get();
+                existingUser.setPassword(null);
+                reqRes.setOurUsers(existingUser);
                 reqRes.setStatusCode(200);
                 reqRes.setMessage("Successfully retrieved user info");
             } else {
@@ -232,15 +242,5 @@ public class BankService {
             reqRes.setError(e.getMessage());
         }
         return reqRes;
-    }
-
-    // Kiểm tra quyền Admin
-    private boolean hasAdminRole() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication == null || authentication.getAuthorities() == null) {
-            return false;
-        }
-        return authentication.getAuthorities().stream()
-                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ADMIN"));
     }
 }

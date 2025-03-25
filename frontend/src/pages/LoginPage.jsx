@@ -1,25 +1,27 @@
 import React, { useState } from 'react';
 import { Form, Input, Button, Typography, message } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
-import { login } from '../services/authService';
+import UserService from '../services/UserService';
+import { useNavigate } from 'react-router-dom';
 
 const { Title } = Typography;
 
 const LoginPage = () => {
   const [loading, setLoading] = useState(false);
 
+  const navigate = useNavigate();
+
   const onFinish = async (values) => {
     setLoading(true);
     try {
-      const data = await login(values);
+      const data = await UserService.login(values);
       message.success('Đăng nhập thành công!');
-      console.log('User data:', data);
 
-      // Lưu token vào localStorage
       localStorage.setItem('token', data.token);
+      localStorage.setItem('refreshToken', data.refreshToken);
+      localStorage.setItem('role', data.role);
 
-      // Chuyển hướng đến trang Dashboard
-      window.location.href = '/dashboard';
+      navigate('/'); 
     } catch (error) {
       message.error(error.message || 'Đăng nhập thất bại!');
     } finally {
@@ -57,6 +59,11 @@ const LoginPage = () => {
         <Form.Item>
           <Button type="primary" htmlType="submit" loading={loading} block>
             Đăng nhập
+          </Button>
+        </Form.Item>
+        <Form.Item>
+          <Button type="link" onClick={() => navigate('/register')} block>
+            Chưa có tài khoản? Đăng ký
           </Button>
         </Form.Item>
       </Form>

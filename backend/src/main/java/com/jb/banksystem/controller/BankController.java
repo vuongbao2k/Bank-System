@@ -19,42 +19,25 @@ public class BankController {
     @PostMapping("/auth/register")
     public ResponseEntity<ReqRes> register(@RequestBody ReqRes reg) {
         ReqRes response = bankService.register(reg);
-        if (response.getStatusCode() == 200) {
-            return ResponseEntity.ok(response);
-        }
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response); // Trả về 500 nếu có lỗi
+        return ResponseEntity.status(response.getStatusCode()).body(response);
     }
 
     @PostMapping("/auth/login")
     public ResponseEntity<ReqRes> login(@RequestBody ReqRes req) {
         ReqRes response = bankService.login(req);
-        if (response.getStatusCode() == 200) {
-            return ResponseEntity.ok(response);
-        }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response); // Trả về 401 nếu login thất bại
+        return ResponseEntity.status(response.getStatusCode()).body(response);
     }
 
     @PostMapping("/auth/refresh")
     public ResponseEntity<ReqRes> refreshToken(@RequestBody ReqRes req) {
-        System.out.println("Received refresh request with token: " + req.getToken());
-
         ReqRes response = bankService.refreshToken(req);
-        if (response.getStatusCode() == 500) {
-            System.out.println("Refresh token is invalid or expired.");
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response); // 403 Forbidden nếu token không hợp lệ
-        }
-
-        System.out.println("New accessToken: " + response.getToken());
-        return ResponseEntity.ok(response);
+        return ResponseEntity.status(response.getStatusCode()).body(response);
     }
 
     @GetMapping("/admin/get-all-users")
     public ResponseEntity<ReqRes> getAllUsers() {
         ReqRes response = bankService.getAllUsers();
-        if (response.getStatusCode() == 403) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response); // 403 Forbidden nếu không có quyền truy cập
-        }
-        return ResponseEntity.ok(response);
+        return ResponseEntity.status(response.getStatusCode()).body(response);
     }
 
     @GetMapping("/admin/get-users/{userId}")
