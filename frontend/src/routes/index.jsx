@@ -1,11 +1,12 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import LayoutDefault from "../layout/LayoutDefault";
-import LayoutAdmin from "../layout/LayoutAdmin";  // Nếu có trang admin
+import LayoutAdmin from "../layout/LayoutAdmin";
 import Home from "../pages/Home";
 import LoginPage from "../pages/LoginPage";
 import Logout from '../pages/Logout';
 import ProtectedRoute from "../components/ProtectedRoute";
 import RegisterPage from '../pages/RegisterPage';
+import DashboardPage from '../pages/DashboardPage';
 
 
 export const routes = [
@@ -32,6 +33,15 @@ export const routes = [
       {
         path: "*",
         element: <Navigate to="/" />,
+      },
+      {
+        element: <ProtectedRoute />,
+        children: [
+          {
+            path: "profile",
+            element: <DashboardPage />,
+          },
+        ]
       }
     ]
   },
