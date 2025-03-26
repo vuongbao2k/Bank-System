@@ -5,8 +5,10 @@ import Home from "../pages/Home";
 import LoginPage from "../pages/LoginPage";
 import Logout from '../pages/Logout';
 import ProtectedRoute from "../components/ProtectedRoute";
+import AdminRoute from '../components/AdminRoute';
 import RegisterPage from '../pages/RegisterPage';
 import DashboardPage from '../pages/DashboardPage';
+import UserManagementPage from '../pages/UserManagementPage';
 
 
 export const routes = [
@@ -46,14 +48,14 @@ export const routes = [
     ]
   },
   {
-    element: <ProtectedRoute />,
+    element: <AdminRoute />,
     children: [
       {
-        element: <LayoutAdmin />,
+        element: <LayoutDefault />,
         children: [
           {
-            path: "dashboard",
-            element: <Home />,
+            path: "/admin",
+            element: <UserManagementPage />,
           },
         ]
       }
