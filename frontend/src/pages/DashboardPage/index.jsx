@@ -1,12 +1,12 @@
 // src/pages/DashboardPage.js
 import React, { useEffect, useState } from 'react';
 import { Button, message } from 'antd';
-import UserService from '../services/UserService';
+import UserService from '../../services/UserService';
 
-import AccountInfo from '../components/AccountInfo';
-import AccountTable from '../components/AccountTable';
-import TransactionHistory from '../components/TransactionHistory';
-import TransferModal from '../components/TransferModal';
+import AccountInfo from '../../components/AccountInfo';
+import AccountTable from '../../components/AccountTable';
+import TransactionHistory from '../../components/TransactionHistory';
+import TransferModal from '../../components/TransferModal';
 
 const DashboardPage = () => {
   const [accounts, setAccounts] = useState([]);

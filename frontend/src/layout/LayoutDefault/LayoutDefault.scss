@@ -1,10 +1,10 @@
-
 .footer {
-  background: linear-gradient(135deg, #ff7e5f, #feb47b);
+  background: linear-gradient(135deg, #ff7e5f, #feb47b); /* Gradient cho footer */
   text-align: center;
-  padding: 10px 20px;
+  padding: 15px;
+  font-size: 14px;
+  color: #fff;
 }
-
 
 .layout-default {
   display: flex;
@@ -12,72 +12,69 @@
   min-height: 100vh;
 
   &__header {
-    background: linear-gradient(135deg, #1d8cf8, #2c93e8);
+    background: linear-gradient(135deg, #1d8cf8, #2c93e8); /* Gradient mượt mà */
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 10px 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Thêm bóng đổ cho header */
   }
 
-  &__logo .logo-link{
+  &__logo .logo-link {
     color: #fff;
-    font-size: 24px;
+    font-size: 28px;
     font-weight: bold;
+    text-decoration: none;
+  }
+
+  &__logo .logo-link:hover {
+    color: #ffd700; /* Màu sắc hover của logo */
+    text-decoration: underline;
+  }
+
+  &__account {
+    display: flex;
+    align-items: center;
+  }
+
+  &__account .ml-10 {
+    margin-left: 10px;
   }
 
   &__main {
     padding: 20px;
     flex: 1;
-  }
-
-  &__footer {
-    background: orange;
-    text-align: center;
-    padding: 10px 20px;
+    background-color: #f4f6f9; /* Nền chính sáng */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Bóng đổ cho main */
   }
 }
 
-.menu {
-  ul {
-    display: flex;
-    list-style: none;
-    margin: 0;
-    padding: 0;
+/* Styling cho các button trong header */
+.ant-btn {
+  border-radius: 25px; /* Làm nút mềm mại */
+  font-size: 14px;
+  height: 40px;
+}
 
-    li {
-      margin-left: 20px;
-      position: relative;
-    }
-  }
+/* Cải thiện độ tương phản khi hover các nút */
+.ant-btn:hover {
+  background-color: #1890ff; /* Đổi màu nút khi hover */
+  border-color: #1890ff;
+}
 
-  &__link {
-    color: #000;
+/* Làm cho các button trong header thêm nổi bật */
+.ant-btn-primary {
+  background-color: #1890ff;
+  border-color: #1890ff;
+  color: #fff;
+}
 
-    &--active {
-      color: #fff;
-    }
-  }
+/* Cải thiện các đường viền trong các phần tử */
+.ant-input, .ant-select-selector {
+  border-radius: 20px; /* Làm tròn góc */
+  border-color: #d9d9d9; /* Viền mờ */
+}
 
-  &__sub {
-    position: absolute;
-    top: 100%;
-    right: 0;
-    background: orangered;
-    display: none!important;
-    flex-direction: column;
-
-    li {
-      margin-left: 0!important;
-    }
-
-    a {
-      white-space: nowrap;
-      display: block;
-      padding: 4px 10px;
-    }
-  }
-
-  li:hover > &__sub {
-    display: flex!important;
-  }
+.ant-input:focus, .ant-select-focused {
+  border-color: #40a9ff; /* Màu sắc khi focus */
 }

@@ -1,0 +1,41 @@
+.login-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(to right, #6a11cb, #2575fc); // Gradient nền
+
+  .login-card {
+    max-width: 400px;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.5); // Nền trắng trong suốt (80% opacity)
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+
+  .ant-form-item {
+    margin-bottom: 16px; // Tạo khoảng cách giữa các trường nhập
+  }
+
+  .ant-btn {
+    border-radius: 4px; // Đảm bảo các nút có viền mềm mại
+  }
+
+  .ant-btn-primary {
+    background-color: #2575fc;
+    border-color: #2575fc;
+    &:hover {
+      background-color: #1d63d6;
+      border-color: #1d63d6;
+    }
+  }
+
+  .ant-btn-link {
+    color: #2575fc;
+    &:hover {
+      color: #1d63d6;
+    }
+  }
+}
