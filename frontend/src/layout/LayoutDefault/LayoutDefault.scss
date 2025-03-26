@@ -1,18 +1,11 @@
-.footer {
-  background: linear-gradient(135deg, #ff7e5f, #feb47b); /* Gradient cho footer */
-  text-align: center;
-  padding: 15px;
-  font-size: 14px;
-  color: #fff;
-}
-
 .layout-default {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  background-image: url(../../assets/home-bg.jpg);
 
   &__header {
-    background: linear-gradient(135deg, #1d8cf8, #86c7fd); /* Gradient mượt mà */
+    background: transparent;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -20,16 +13,15 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Thêm bóng đổ cho header */
   }
 
-  &__logo .logo-link {
-    color: #fff;
-    font-size: 28px;
-    font-weight: bold;
-    text-decoration: none;
-  }
+  &__logo {
+    .logo-link {
+      display: inline-block;
+    }
 
-  &__logo .logo-link:hover {
-    color: #ffd700; /* Màu sắc hover của logo */
-    text-decoration: underline;
+    img {
+      width: 50px; /* Điều chỉnh kích thước logo */
+      height: auto;
+    }
   }
 
   &__account {
@@ -44,8 +36,15 @@
   &__main {
     padding: 20px;
     flex: 1;
-    background-color: #dfecff; /* Nền chính sáng */
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Bóng đổ cho main */
+  }
+  
+  &__footer {
+    background: transparent;
+    text-align: center;
+    padding: 15px;
+    font-size: 14px;
+    color: #fff;
   }
 }
 
@@ -54,19 +53,23 @@
   border-radius: 25px; /* Làm nút mềm mại */
   font-size: 14px;
   height: 40px;
+  background: transparent !important; /* Làm background của button trong suốt */
+  border: 1px solid #fff !important; /* Thêm viền trắng cho button */
+  color: #fff; /* Màu chữ trắng */
 }
 
 /* Cải thiện độ tương phản khi hover các nút */
 .ant-btn:hover {
-  background-color: #1890ff; /* Đổi màu nút khi hover */
-  border-color: #1890ff;
+  background-color: rgba(24, 144, 255, 0.1) !important; /* Đổi màu nút khi hover */
+  border-color: #1890ff !important;
+  color: #1890ff;
 }
 
 /* Làm cho các button trong header thêm nổi bật */
 .ant-btn-primary {
-  background-color: #1890ff;
-  border-color: #1890ff;
-  color: #fff;
+  background-color: transparent !important;
+  border-color: #1890ff !important;
+  color: #1890ff !important;
 }
 
 /* Cải thiện các đường viền trong các phần tử */

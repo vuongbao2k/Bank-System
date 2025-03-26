@@ -5,7 +5,10 @@ import UserService from '../../services/UserService';
 import { useNavigate } from 'react-router-dom';
 import './LoginPage.scss';
 
-const { Title } = Typography;
+// Import logo
+import logo from '../../assets/logo-white.png';
+
+const { Title, Text } = Typography;
 
 const LoginPage = () => {
   const [loading, setLoading] = useState(false);
@@ -19,7 +22,7 @@ const LoginPage = () => {
       localStorage.setItem('token', data.token);
       localStorage.setItem('refreshToken', data.refreshToken);
       localStorage.setItem('role', data.role);
-      navigate('/'); 
+      navigate('/');
     } catch (error) {
       message.error(error.message || 'Đăng nhập thất bại!');
     } finally {
@@ -29,8 +32,10 @@ const LoginPage = () => {
 
   return (
     <div className="login-page">
+      <img src={logo} alt="Logo" className="logo" />
       <div className="login-card">
-        <Title level={2}>Đăng nhập</Title>
+        <Title level={1} className="login-title">JB Bank</Title>
+        <Text className="greeting-text">Xin kính chào Quý khách</Text>
         <Form
           name="login"
           onFinish={onFinish}
@@ -44,6 +49,7 @@ const LoginPage = () => {
             <Input
               prefix={<UserOutlined />}
               placeholder="Tên đăng nhập"
+              style={{ backgroundColor: 'rgba(255, 255, 255, 0.1)', color: 'white' }}
             />
           </Form.Item>
           <Form.Item
@@ -53,6 +59,7 @@ const LoginPage = () => {
             <Input.Password
               prefix={<LockOutlined />}
               placeholder="Mật khẩu"
+              style={{ backgroundColor: 'rgba(255, 255, 255, 0.1)', color: 'white' }}
             />
           </Form.Item>
           <Form.Item>

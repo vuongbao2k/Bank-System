@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { Button } from 'antd';
 import { HomeOutlined, LoginOutlined, UserAddOutlined, UserOutlined } from '@ant-design/icons';
 import UserService from '../../services/UserService';
+import logo from '../../assets/logo-white.png';
 
 function Header() {
   return (
@@ -10,7 +11,7 @@ function Header() {
       {/* Logo JB Bank với liên kết đến trang chủ */}
       <div className="layout-default__logo">
         <NavLink to='/' className="logo-link">
-          JB Bank
+          <img src={logo} alt="Logo JB Bank" /> {/* Thêm logo hình ảnh */}
         </NavLink>
       </div>
 
