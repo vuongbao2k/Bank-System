@@ -1,0 +1,68 @@
+.account-card {
+  .ant-card {
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    margin-bottom: 20px;
+    background: linear-gradient(to right, #00bfff, #ff7f50);
+  }
+
+  .ant-card-body {
+    background: linear-gradient(to right, #00bfff, #ff7f50);
+    padding: 20px;
+  }
+
+  .ant-card-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #fff;
+  }
+
+  .card-info {
+    font-size: 16px;
+    font-weight: 500;
+    color: #fff;
+    margin-bottom: 10px;
+  }
+
+  /* Làm nổi bật loại tiền tệ */
+  .currency {
+    font-size: 16px;
+    font-weight: bold;
+    color: #1890ff;
+    background-color: #e6f7ff;
+    padding: 4px 8px;
+    border-radius: 5px;
+  }
+
+  /* Hiệu ứng hover khi người dùng di chuột vào card */
+  .ant-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  }
+
+  .ant-btn {
+    margin-top: 12px;
+  }
+
+  /* Sửa lại phần Button của Lịch sử giao dịch */
+  .ant-btn-link {
+    background-color: transparent; /* Làm nền nút trong suốt */
+    color: #1890ff; /* Màu chữ cho nút */
+    border: 1px solid #1890ff; /* Viền màu xanh */
+    font-weight: 500;
+    padding: 5px 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  /* Thêm hiệu ứng hover cho nút */
+  .ant-btn-link:hover {
+    background-color: #1890ff; /* Khi hover sẽ có nền xanh */
+    color: white; /* Chữ sẽ đổi màu trắng */
+  }
+
+  .ant-card-extra {
+    text-align: right;
+  }
+}

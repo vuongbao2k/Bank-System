@@ -1,0 +1,24 @@
+.account-info-container {
+  text-align: center; /* Căn giữa toàn bộ nội dung */
+  padding: 20px;
+  color: #333; /* Màu chữ chính là #333 (màu xám tối) */
+  max-width: 500px; /* Giới hạn chiều rộng */
+  margin: 0 auto; /* Căn giữa component */
+}
+
+.greeting-message {
+  font-size: 24px; /* Kích thước chữ vừa phải */
+  font-weight: 500; /* Độ đậm vừa phải */
+  color: #333; /* Màu chữ đen nhẹ */
+}
+
+.greeting-text {
+  font-size: 26px; /* Cỡ chữ lớn cho lời chào */
+  color: #1890ff; /* Màu xanh dương nhẹ cho lời chào */
+}
+
+.subtext {
+  font-size: 16px; /* Chữ nhỏ hơn cho câu chúc mừng */
+  color: #888; /* Màu xám nhẹ cho câu chúc mừng */
+  margin-top: 10px;
+}

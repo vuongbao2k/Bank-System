@@ -1,7 +1,7 @@
-// src/components/AccountInfo.js
 import React, { useEffect, useState } from 'react';
 import { message } from 'antd';
-import UserService from '../services/UserService';
+import UserService from '../../services/UserService';
+import './AccountInfo.scss'
 
 const AccountInfo = () => {
   const [user, setUser] = useState(null);
@@ -31,11 +31,11 @@ const AccountInfo = () => {
   }, []);
 
   return (
-    <div style={{ marginBottom: '20px', textAlign: 'left' }}>
+    <div className="account-info-container">
       {user ? (
-        <div>
-          <p><strong>Tên người dùng:</strong> {user.username}</p>
-          <p><strong>Email:</strong> {user.email}</p>
+        <div className="greeting-message">
+          <p className="greeting-text">Xin chào, {user.username}!</p>
+          <p className="subtext">Chúc bạn một ngày tốt lành!</p>
         </div>
       ) : (
         <p>Đang tải thông tin người dùng...</p>

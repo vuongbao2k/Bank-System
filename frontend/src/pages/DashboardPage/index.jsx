@@ -1,12 +1,13 @@
-// src/pages/DashboardPage.js
 import React, { useEffect, useState } from 'react';
-import { Button, message } from 'antd';
+import { message, Button } from 'antd';
 import UserService from '../../services/UserService';
 
 import AccountInfo from '../../components/AccountInfo';
-import AccountTable from '../../components/AccountTable';
+import AccountCard from '../../components/AccountCard';
 import TransactionHistory from '../../components/TransactionHistory';
 import TransferModal from '../../components/TransferModal';
+import FunctionIcons from '../../components/FunctionIcons';
+import './DashboardPage.scss'
 
 const DashboardPage = () => {
   const [accounts, setAccounts] = useState([]);
@@ -48,7 +49,7 @@ const DashboardPage = () => {
 
       // Sau khi chuyển tiền thành công, lấy lại danh sách tài khoản và cập nhật state
       const updatedAccounts = await UserService.getAccounts();
-      setAccounts(updatedAccounts);  // Đây là lúc `accounts` được cập nhật và truyền lại vào AccountTable
+      setAccounts(updatedAccounts);  // Đây là lúc `accounts` được cập nhật và truyền lại vào AccountCard
 
       setIsModalVisible(false);
     } catch (error) {
@@ -62,10 +63,15 @@ const DashboardPage = () => {
   return (
     <div style={{ maxWidth: '800px', margin: '100px auto', textAlign: 'center' }}>
       <AccountInfo />
-      <Button type="primary" onClick={() => setIsModalVisible(true)} style={{ marginBottom: '20px' }}>
-        Chuyển tiền
-      </Button>
-      <AccountTable accounts={accounts} /> 
+      
+      <AccountCard accounts={accounts} />
+      <div className="button-container">
+        <button className="button-87" onClick={() => setIsModalVisible(true)}>
+          Chuyển tiền
+        </button>
+      </div>
+      <FunctionIcons />
+
       <TransferModal
         isModalVisible={isModalVisible}
         setIsModalVisible={setIsModalVisible}

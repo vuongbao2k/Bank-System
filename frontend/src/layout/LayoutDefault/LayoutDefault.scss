@@ -12,7 +12,7 @@
   min-height: 100vh;
 
   &__header {
-    background: linear-gradient(135deg, #1d8cf8, #2c93e8); /* Gradient mượt mà */
+    background: linear-gradient(135deg, #1d8cf8, #86c7fd); /* Gradient mượt mà */
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -44,7 +44,7 @@
   &__main {
     padding: 20px;
     flex: 1;
-    background-color: #f4f6f9; /* Nền chính sáng */
+    background-color: #dfecff; /* Nền chính sáng */
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Bóng đổ cho main */
   }
 }

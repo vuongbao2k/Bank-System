@@ -86,7 +86,7 @@ const TransactionHistory = ({ accounts }) => {
         dataSource={transactions}
         columns={transactionColumns}
         rowKey={(record) => `${record.id}-${record.type}`}
-        pagination={false}
+        pagination={{ pageSize: 5 }}
         bordered
       />
     </div>
