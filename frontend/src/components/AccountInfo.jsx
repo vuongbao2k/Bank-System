@@ -1,7 +1,7 @@
 // src/components/AccountInfo.js
 import React, { useEffect, useState } from 'react';
 import { message } from 'antd';
-import axios from 'axios';
+import UserService from '../services/UserService';
 
 const AccountInfo = () => {
   const [user, setUser] = useState(null);
@@ -15,11 +15,9 @@ const AccountInfo = () => {
       }
 
       try {
-        const response = await axios.get('http://localhost:1010/adminuser/get-profile', {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        if (response.data.ourUsers) {
-          setUser(response.data.ourUsers);
+        const response = await UserService.getYourProfile();
+        if (response.ourUsers) {
+          setUser(response.ourUsers);
         } else {
           message.error('Dữ liệu người dùng không hợp lệ!');
         }

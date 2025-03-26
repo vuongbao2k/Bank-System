@@ -1,7 +1,7 @@
 // src/components/TransactionHistory.js
 import React, { useEffect, useState } from 'react';
 import { Table, message } from 'antd';
-import axios from 'axios';
+import UserService from '../services/UserService';
 
 const TransactionHistory = ({ accounts }) => {
   const [transactions, setTransactions] = useState([]);
@@ -9,30 +9,23 @@ const TransactionHistory = ({ accounts }) => {
   useEffect(() => {
     const fetchTransactions = async () => {
       try {
-        const token = localStorage.getItem('token');
         const allTransactions = [];
 
         for (const account of accounts) {
           // Lấy lịch sử giao dịch mà tài khoản là nguồn (Chuyển tiền)
-          const sentTransactions = await axios.get(
-            `http://localhost:1010/api/transactions/source/${account.accountNumber}`,
-            { headers: { Authorization: `Bearer ${token}` } }
-          );
-          sentTransactions.data.forEach((transaction) => {
+          const sentTransactions = await UserService.getSentTransactions(account.accountNumber);
+          sentTransactions.forEach((transaction) => {
             transaction.type = 'Chuyển tiền';
           });
 
           // Lấy lịch sử giao dịch mà tài khoản là đích (Nhận tiền)
-          const receivedTransactions = await axios.get(
-            `http://localhost:1010/api/transactions/destination/${account.accountNumber}`,
-            { headers: { Authorization: `Bearer ${token}` } }
-          );
-          receivedTransactions.data.forEach((transaction) => {
+          const receivedTransactions = await UserService.getReceivedTransactions(account.accountNumber);
+          receivedTransactions.forEach((transaction) => {
             transaction.type = 'Nhận tiền';
           });
 
           // Gộp giao dịch gửi và nhận
-          allTransactions.push(...sentTransactions.data, ...receivedTransactions.data);
+          allTransactions.push(...sentTransactions, ...receivedTransactions);
         }
 
         // Sắp xếp giao dịch theo thời gian (mới nhất trước)

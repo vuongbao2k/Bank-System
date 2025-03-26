@@ -52,6 +52,16 @@ class UserService {
     return response.data;
   }
 
+  static async getSentTransactions(accountNumber) {
+    const response = await axiosInstance.get(`/api/transactions/source/${accountNumber}`)
+    return response.data;
+  }
+
+  static async getReceivedTransactions(accountNumber) {
+    const response = await axiosInstance.get(`/api/transactions/destination/${accountNumber}`)
+    return response.data;
+  }
+
   // AUTHENTICATION CHECKER
 
   static logout() {
