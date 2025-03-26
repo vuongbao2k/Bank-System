@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Button, Modal, Form, Input, Select, Switch, message } from 'antd';
 import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
+import { CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
 import UserService from '../../services/UserService';
 
 const { Option } = Select;
@@ -110,7 +111,13 @@ function UserManagementPage() {
       dataIndex: 'enabled',
       key: 'enabled',
       render: (enabled) => (
-        <span>{enabled ? 'Hoạt động' : 'Không hoạt động'}</span>
+        <span>
+          {enabled ? (
+            <CheckCircleOutlined style={{ color: 'green', fontSize: '16px' }} />
+          ) : (
+            <CloseCircleOutlined style={{ color: 'red', fontSize: '16px' }} />
+          )}
+        </span>
       ),
     },
     {
