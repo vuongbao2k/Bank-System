@@ -1,0 +1,39 @@
+.home {
+  font-family: 'Arial', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Đảm bảo chiều cao của trang chiếm hết màn hình */
+  padding: 0;
+
+  &__content {
+    width: 100%;
+    max-width: 1200px; /* Giới hạn độ rộng của content */
+    display: flex;
+    flex-direction: column; /* Đảm bảo các phần tử bên trong căn theo cột */
+    justify-content: center; /* Căn giữa theo chiều dọc */
+    align-items: center; /* Căn giữa theo chiều ngang */
+  }
+
+  &__greeting {
+    display: flex;
+    align-items: center;
+    font-size: 24px;
+    color: #333;
+
+    .home__greeting-icon {
+      font-size: 40px;
+      margin-right: 15px; /* Cách icon với văn bản */
+      color: #1890ff; /* Màu của icon */
+    }
+
+    .home__greeting-text {
+      font-weight: bold;
+    }
+
+    .home__subtext {
+      font-size: 18px;
+      color: #666;
+    }
+  }
+}

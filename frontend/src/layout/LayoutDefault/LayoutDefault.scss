@@ -2,18 +2,43 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background-image: url(../../assets/home-bg.jpg);
+  background-size: cover;
+  background-position: center; /* Căn giữa hình nền */
+
+  &.morning {
+    background-image: url(../../assets/home-bg-morning.jpg);
+    background-size: cover;
+    background-position: center;
+  }
+
+  &.night {
+    background-image: url(../../assets/home-bg-night.jpg);
+    background-size: cover;
+    background-position: center;
+  }
+
+  &.other-pages {
+    background-color: #4CAF50; /* Màu xanh cho các trang khác */
+  }
+
 
   &__header {
     background: transparent;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
     padding: 10px 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Thêm bóng đổ cho header */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
   }
 
   &__logo {
+    display: flex;
+    align-items: center; /* Căn giữa logo */
     .logo-link {
       display: inline-block;
     }
@@ -34,50 +59,79 @@
   }
 
   &__main {
-    padding: 20px;
     flex: 1;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Bóng đổ cho main */
   }
-  
+
   &__footer {
     background: transparent;
     text-align: center;
     padding: 15px;
     font-size: 14px;
     color: #fff;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
   }
 }
 
-/* Styling cho các button trong header */
-.ant-btn {
-  border-radius: 25px; /* Làm nút mềm mại */
-  font-size: 14px;
-  height: 40px;
-  background: transparent !important; /* Làm background của button trong suốt */
-  border: 1px solid #fff !important; /* Thêm viền trắng cho button */
-  color: #fff; /* Màu chữ trắng */
+.layout-default__nav {
+  display: flex;
+  justify-content: center;
+  flex-grow: 1; /* Chiếm toàn bộ không gian còn lại giữa logo và tài khoản */
 }
 
-/* Cải thiện độ tương phản khi hover các nút */
-.ant-btn:hover {
-  background-color: rgba(24, 144, 255, 0.1) !important; /* Đổi màu nút khi hover */
-  border-color: #1890ff !important;
-  color: #1890ff;
+.nav-link {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 15px;
+  text-decoration: none;
+  color: #333;
+  padding: 10px 15px; /* Thêm padding để tạo khoảng cách */
+  border-radius: 20px; /* Viền tròn cho link */
+  transition: all 0.3s ease; /* Thêm hiệu ứng chuyển đổi mượt mà */
+  
+  &:hover {
+    color: #1890ff; /* Màu khi hover */
+    background: white; /* Màu nền khi hover */
+    padding: 12px 18px; /* Thêm padding khi hover */
+    border-radius: 25px; /* Làm tròn góc khi hover */
+  }
 }
 
-/* Làm cho các button trong header thêm nổi bật */
-.ant-btn-primary {
-  background-color: transparent !important;
-  border-color: #1890ff !important;
-  color: #1890ff !important;
+/* Tối ưu hóa layout cho các phần tử trên trang */
+.layout-default__header {
+  /* Các style khác đã được duy trì */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background-color: transparent;
+  padding: 10px 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Cải thiện các đường viền trong các phần tử */
-.ant-input, .ant-select-selector {
-  border-radius: 20px; /* Làm tròn góc */
-  border-color: #d9d9d9; /* Viền mờ */
+.layout-default__logo {
+  display: flex;
+  align-items: center;
 }
 
-.ant-input:focus, .ant-select-focused {
-  border-color: #40a9ff; /* Màu sắc khi focus */
+.layout-default__nav {
+  display: flex;
+  justify-content: center;
+  flex-grow: 1;
+}
+
+.layout-default__account {
+  display: flex;
+  align-items: center;
+}
+
+.layout-default__account .ml-10 {
+  margin-left: 10px;
 }

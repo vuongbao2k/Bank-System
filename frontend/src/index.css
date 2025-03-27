@@ -14,6 +14,7 @@ body {
   min-height: 100vh;
 }
 
+
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
@@ -37,3 +38,12 @@ button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
+
+.container {
+  width: 100%; /* Đảm bảo container chiếm toàn bộ chiều rộng */
+  max-width: 1200px; /* Giới hạn chiều rộng tối đa */
+  margin: 0 auto; /* Căn giữa theo chiều ngang */
+  padding: 20px; /* Thêm padding để tạo khoảng cách giữa nội dung và viền container */
+  box-sizing: border-box; /* Đảm bảo padding không ảnh hưởng đến chiều rộng */
+}
+

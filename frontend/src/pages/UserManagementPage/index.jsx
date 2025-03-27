@@ -145,7 +145,7 @@ function UserManagementPage() {
   ];
 
   return (
-    <div>
+    <div className="container">
       <h2>Quản lý người dùng</h2>
       <Button
         type="primary"
