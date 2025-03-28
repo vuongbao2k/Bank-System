@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import LayoutDefault from "../layout/LayoutDefault";
 import LayoutAdmin from "../layout/LayoutAdmin";
 import Home from "../pages/Home";
@@ -36,26 +36,26 @@ export const routes = [
         path: "*",
         element: <Navigate to="/" />,
       },
+    ]
+  },
+  {
+    element: <ProtectedRoute />,
+    children: [
       {
-        element: <ProtectedRoute />,
+        element: <LayoutAdmin />,
         children: [
           {
             path: "profile",
             element: <DashboardPage />,
           },
-        ]
-      }
-    ]
-  },
-  {
-    element: <AdminRoute />,
-    children: [
-      {
-        element: <LayoutDefault />,
-        children: [
           {
-            path: "/admin",
-            element: <UserManagementPage />,
+            element: <AdminRoute />,
+            children: [
+              {
+                path: "/admin",
+                element: <UserManagementPage />,
+              },
+            ]
           },
         ]
       }

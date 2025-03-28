@@ -1,0 +1,116 @@
+.layout-admin {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #dff7ff; /* Màu nền của layout-admin */
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: transparent; /* Màu nền trong suốt cho header */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+  }
+
+  &__logo {
+    display: flex;
+    align-items: center;
+
+    .logo-link {
+      display: inline-block;
+    }
+
+    img {
+      width: 50px;
+      height: auto;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+
+    /* Icon Quản lý Tooltip */
+    .ant-tooltip-inner {
+      background-color: #1890ff;
+      color: white;
+    }
+
+    .ant-tooltip-arrow {
+      border-color: #1890ff;
+    }
+
+    /* Icon Thông báo */
+    .ant-badge {
+      cursor: pointer;
+    }
+
+    /* Icon Đăng xuất */
+    .ant-btn-link {
+      color: white;
+      margin-left: 20px;
+    }
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #00bfff;
+    position: fixed;
+    bottom: 20px; /* Cách lề dưới một chút */
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px 30px;
+    border-radius: 15px;
+    z-index: 1000;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    width: auto;
+    min-width: 300px; /* Đảm bảo footer có độ rộng tối thiểu */
+  }
+
+  &__footer .footer-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: 0 15px;
+
+    .icon-text {
+      margin-top: 5px;
+      color: white;
+      font-size: 12px;
+    }
+
+    &.qr-icon {
+      position: relative;
+      top: -20px; /* Đẩy icon Quét mã QR lên trên */
+    }
+  }
+
+  .ant-tooltip-inner {
+    background-color: #1890ff;
+    color: white;
+  }
+
+  .ant-tooltip-arrow {
+    border-color: #1890ff;
+  }
+
+  /* Hover effect */
+  .anticon:hover {
+    transform: scale(1.2);
+    transition: transform 0.3s ease, color 0.3s ease;
+  }
+
+  .anticon {
+    cursor: pointer;
+    transition: transform 0.3s ease, color 0.3s ease;
+  }
+}

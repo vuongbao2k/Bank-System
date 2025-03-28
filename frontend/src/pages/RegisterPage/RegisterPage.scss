@@ -1,0 +1,76 @@
+.register-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-image: url("../../assets/login-bg.jpg");
+  background-size: cover;
+  position: relative;
+
+  .logo {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 75px;
+    height: auto;
+  }
+
+  .register-card {
+    max-width: 400px;
+    width: 100%;
+    background-color: transparent;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    color: white;
+    backdrop-filter: none;
+  }
+
+  .register-title {
+    color: white;
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+  }
+
+  .greeting-text {
+    color: white;
+    font-size: 1rem;
+    margin-bottom: 30px;
+  }
+
+  .ant-form-item {
+    margin-bottom: 16px;
+  }
+
+  .ant-btn {
+    border-radius: 4px;
+  }
+
+  .ant-btn-primary {
+    background: linear-gradient(to right, #6a11cb, #2575fc) !important;
+    border: none !important;
+    color: white !important;
+
+    &:hover {
+      background: linear-gradient(to right, #1d63d6, #6a11cb) !important;
+      border: none !important;
+    }
+
+    &:focus,
+    &:active {
+      background: linear-gradient(to right, #1d63d6, #6a11cb) !important;
+      border: none !important;
+    }
+  }
+
+  .ant-btn-link {
+    color: #2575fc;
+    border: none !important;
+
+    &:hover {
+      color: #1d63d6;
+      border: none !important;
+    }
+  }
+}

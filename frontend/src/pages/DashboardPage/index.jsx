@@ -61,26 +61,33 @@ const DashboardPage = () => {
   };
 
   return (
-    <div style={{ maxWidth: '800px', margin: '100px auto', textAlign: 'center' }}>
-      <AccountInfo />
-      
-      <AccountCard accounts={accounts} />
-      <div className="button-container">
-        <button className="button-87" onClick={() => setIsModalVisible(true)}>
-          Chuyển tiền
-        </button>
+    <>
+      <div className='greeting'>
+        <AccountInfo />
       </div>
-      <FunctionIcons />
+      <div className='container'>
+        <div className="account-card">
+          <AccountCard accounts={accounts} />
+        </div>
+        <div className="button-container">
+          <button className="button-87" onClick={() => setIsModalVisible(true)}>
+            Chuyển tiền
+          </button>
+        </div>
+        <FunctionIcons />
 
-      <TransferModal
-        isModalVisible={isModalVisible}
-        setIsModalVisible={setIsModalVisible}
-        accounts={accounts}
-        handleTransfer={handleTransfer}
-        loading={loading}
-      />
-      <TransactionHistory accounts={accounts} />
-    </div>
+        <TransferModal
+          isModalVisible={isModalVisible}
+          setIsModalVisible={setIsModalVisible}
+          accounts={accounts}
+          handleTransfer={handleTransfer}
+          loading={loading}
+        />
+        <div className="transaction-history">
+          <TransactionHistory accounts={accounts} />
+        </div>
+      </div>
+    </>
   );
 };
 

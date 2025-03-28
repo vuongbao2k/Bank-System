@@ -35,7 +35,7 @@ const AccountInfo = () => {
       {user ? (
         <div className="greeting-message">
           <p className="greeting-text">Xin chào, {user.username}!</p>
-          <p className="subtext">Chúc bạn một ngày tốt lành!</p>
+          <p className="subtext">Chúc bạn một ngày tốt lành</p>
         </div>
       ) : (
         <p>Đang tải thông tin người dùng...</p>

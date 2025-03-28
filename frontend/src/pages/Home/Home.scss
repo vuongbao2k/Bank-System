@@ -36,4 +36,17 @@
       color: #666;
     }
   }
+
+  &.night {
+    /* Áp dụng màu chữ trắng cho khi là buổi tối */
+    color: white;
+
+    .home__greeting-text {
+      color: white; /* Màu chữ cho greeting text khi buổi tối */
+    }
+
+    .home__subtext {
+      color: #ccc; /* Màu chữ nhạt hơn cho subtext */
+    }
+  }
 }

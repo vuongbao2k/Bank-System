@@ -21,7 +21,7 @@
     background-color: #4CAF50; /* Màu xanh cho các trang khác */
   }
 
-
+  /* Header */
   &__header {
     background: transparent;
     display: flex;
@@ -38,7 +38,7 @@
 
   &__logo {
     display: flex;
-    align-items: center; /* Căn giữa logo */
+    align-items: center;
     .logo-link {
       display: inline-block;
     }
@@ -74,6 +74,19 @@
     left: 0;
     right: 0;
   }
+
+  /* Chỉnh sửa NavLink khi là buổi tối */
+  &.night .nav-link {
+    color: white; /* Màu chữ trắng cho NavLink khi buổi tối */
+  }
+
+  /* Chỉnh sửa màu nền của NavLink khi hover */
+  &.night .nav-link:hover {
+    color: #1890ff; /* Màu chữ xanh khi hover */
+    background-color: rgba(24, 144, 255, 0.1); /* Nền xanh nhạt khi hover */
+    padding: 12px 18px; /* Thêm padding khi hover */
+    border-radius: 25px; /* Viền tròn khi hover */
+  }
 }
 
 .layout-default__nav {
@@ -87,51 +100,15 @@
   font-weight: 600;
   margin: 0 15px;
   text-decoration: none;
-  color: #333;
+  color: #333; /* Màu chữ mặc định */
   padding: 10px 15px; /* Thêm padding để tạo khoảng cách */
   border-radius: 20px; /* Viền tròn cho link */
   transition: all 0.3s ease; /* Thêm hiệu ứng chuyển đổi mượt mà */
-  
+
   &:hover {
     color: #1890ff; /* Màu khi hover */
     background: white; /* Màu nền khi hover */
     padding: 12px 18px; /* Thêm padding khi hover */
     border-radius: 25px; /* Làm tròn góc khi hover */
   }
-}
-
-/* Tối ưu hóa layout cho các phần tử trên trang */
-.layout-default__header {
-  /* Các style khác đã được duy trì */
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
-  background-color: transparent;
-  padding: 10px 20px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.layout-default__logo {
-  display: flex;
-  align-items: center;
-}
-
-.layout-default__nav {
-  display: flex;
-  justify-content: center;
-  flex-grow: 1;
-}
-
-.layout-default__account {
-  display: flex;
-  align-items: center;
-}
-
-.layout-default__account .ml-10 {
-  margin-left: 10px;
 }

@@ -3,6 +3,7 @@ import { Table, Button, Modal, Form, Input, Select, Switch, message } from 'antd
 import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
 import { CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
 import UserService from '../../services/UserService';
+import './UserManagementPage.scss'
 
 const { Option } = Select;
 
@@ -145,88 +146,92 @@ function UserManagementPage() {
   ];
 
   return (
-    <div className="container">
-      <h2>Quản lý người dùng</h2>
-      <Button
-        type="primary"
-        icon={<PlusOutlined />}
-        onClick={() => handleAddOrEdit(null)}
-        style={{ marginBottom: 20 }}
-      >
-        Thêm người dùng
-      </Button>
-      <Table
-        columns={columns}
-        dataSource={users}
-        rowKey="id"
-        pagination={false}
-      />
-      <Modal
-        title={currentUser ? 'Sửa người dùng' : 'Thêm người dùng'}
-        open={isModalVisible}
-        onCancel={handleCancel}
-        footer={null}
-      >
-        <Form
-          form={form}
-          layout="vertical"
-          onFinish={handleSubmit}
-          initialValues={currentUser || { username: '', email: '', role: 'USER', enabled: true }}
+    <>
+      <div className="manage">
+        <h2>Quản lý người dùng</h2>
+      </div>
+      <div className="container">
+        <Button
+          type="primary"
+          icon={<PlusOutlined />}
+          onClick={() => handleAddOrEdit(null)}
+          style={{ marginBottom: 20 }}
         >
-          <Form.Item
-            label="Username"
-            name="username"
-            rules={[{ required: true, message: 'Vui lòng nhập tên người dùng!' }]}
+          Thêm người dùng
+        </Button>
+        <Table
+          columns={columns}
+          dataSource={users}
+          rowKey="id"
+          pagination={false}
+        />
+        <Modal
+          title={currentUser ? 'Sửa người dùng' : 'Thêm người dùng'}
+          open={isModalVisible}
+          onCancel={handleCancel}
+          footer={null}
+        >
+          <Form
+            form={form}
+            layout="vertical"
+            onFinish={handleSubmit}
+            initialValues={currentUser || { username: '', email: '', role: 'USER', enabled: true }}
           >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            label="Email"
-            name="email"
-            rules={[{ required: true, type: 'email', message: 'Vui lòng nhập email hợp lệ!' }]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            label="Role"
-            name="role"
-            rules={[{ required: true, message: 'Vui lòng chọn vai trò!' }]}
-          >
-            <Select>
-              <Option value="USER">USER</Option>
-              <Option value="ADMIN">ADMIN</Option>
-            </Select>
-          </Form.Item>
-
-          {/* Thêm mật khẩu ở vị trí hợp lý */}
-          {!currentUser && ( // Mật khẩu chỉ cần khi thêm người dùng mới
             <Form.Item
-              label="Password"
-              name="password"
-              rules={[{ required: true, message: 'Vui lòng nhập mật khẩu!' }]}
+              label="Username"
+              name="username"
+              rules={[{ required: true, message: 'Vui lòng nhập tên người dùng!' }]}
             >
-              <Input.Password />
+              <Input />
             </Form.Item>
-          )}
+            <Form.Item
+              label="Email"
+              name="email"
+              rules={[{ required: true, type: 'email', message: 'Vui lòng nhập email hợp lệ!' }]}
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item
+              label="Role"
+              name="role"
+              rules={[{ required: true, message: 'Vui lòng chọn vai trò!' }]}
+            >
+              <Select>
+                <Option value="USER">USER</Option>
+                <Option value="ADMIN">ADMIN</Option>
+              </Select>
+            </Form.Item>
 
-          <Form.Item
-            label="Enabled"
-            name="enabled"
-            valuePropName="checked"
-            rules={[{ required: true, message: 'Vui lòng chọn trạng thái người dùng!' }]}
-          >
-            <Switch />
-          </Form.Item>
+            {/* Thêm mật khẩu ở vị trí hợp lý */}
+            {!currentUser && ( // Mật khẩu chỉ cần khi thêm người dùng mới
+              <Form.Item
+                label="Password"
+                name="password"
+                rules={[{ required: true, message: 'Vui lòng nhập mật khẩu!' }]}
+              >
+                <Input.Password />
+              </Form.Item>
+            )}
 
-          <Form.Item>
-            <Button type="primary" htmlType="submit" block>
-              {currentUser ? 'Cập nhật' : 'Thêm'}
-            </Button>
-          </Form.Item>
-        </Form>
+            <Form.Item
+              label="Enabled"
+              name="enabled"
+              valuePropName="checked"
+              rules={[{ required: true, message: 'Vui lòng chọn trạng thái người dùng!' }]}
+            >
+              <Switch />
+            </Form.Item>
 
-      </Modal>
-    </div>
+            <Form.Item>
+              <Button type="primary" htmlType="submit" block>
+                {currentUser ? 'Cập nhật' : 'Thêm'}
+              </Button>
+            </Form.Item>
+          </Form>
+
+        </Modal>
+      </div>
+    </>
   );
 }
 

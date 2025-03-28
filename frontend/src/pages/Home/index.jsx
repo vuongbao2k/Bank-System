@@ -7,7 +7,7 @@ function Home() {
   const isMorning = useMorning();
 
   return (
-    <div className="home">
+    <div className={`home ${isMorning ? '' : 'night'}`}>
       <div className="home__content">
         <div className="home__greeting">
           <UserOutlined className="home__greeting-icon" />

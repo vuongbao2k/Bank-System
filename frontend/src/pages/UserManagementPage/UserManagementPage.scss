@@ -1,0 +1,21 @@
+.manage {
+  background-image: url(../../assets/top-img.jpg);
+  width: 100%;
+  height: 50vh;
+  background-size: cover;
+  background-position: bottom;
+  display: flex;
+  justify-content: center;
+}
+
+h2 {
+  margin: 25px;
+  font-size: 26px;
+  color: #8fc6fa;
+}
+
+.container {
+  .ant-table-wrapper {
+    margin-bottom: 100px; /* Thêm margin-bottom cho bảng */
+  }
+}
