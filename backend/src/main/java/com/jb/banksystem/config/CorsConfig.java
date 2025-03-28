@@ -15,9 +15,10 @@ public class CorsConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:5173")  // Chỉ frontend của bạn mới có quyền truy cập
+                        .allowedOrigins("http://localhost:5173", "https://bank-system-dvnru5drc-vuong-baos-projects.vercel.app")  // Thêm URL của frontend trên Vercel
                         .allowedMethods("GET", "POST", "PUT", "DELETE")
-                        .allowedHeaders("*");
+                        .allowedHeaders("*")
+                        .allowCredentials(true);  // Cho phép gửi cookie hoặc thông tin xác thực nếu cần
             }
         };
     }
