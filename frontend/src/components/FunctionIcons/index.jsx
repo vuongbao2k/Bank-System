@@ -1,45 +1,38 @@
 import React from 'react';
 import { Button, Row, Col } from 'antd';
 import { PayCircleOutlined, PhoneOutlined, CoffeeOutlined, AppstoreAddOutlined } from '@ant-design/icons'; // Import các icon từ Ant Design
+import './FunctionIcons.scss'; // Import SCSS
 
 const FunctionIcons = () => {
   return (
-    <Row gutter={[16, 16]} justify="center" style={{ marginTop: '30px' }}>
+    <Row gutter={[16, 16]} justify="center" style={{ marginTop: '30px' }} className="function-icons">
       <Col span={6}>
-        <Button 
-          icon={<PayCircleOutlined style={{ fontSize: '24px', display: 'block', margin: '0 auto' }} />} 
+        <Button
+          icon={<PayCircleOutlined />}
           block
-          style={{ textAlign: 'center', fontSize: '14px', marginBottom: '10px' }}
-        >
-          Thanh toán hóa đơn
-        </Button>
+        />
+        <span>Thanh toán hóa đơn</span>
       </Col>
       <Col span={6}>
-        <Button 
-          icon={<PhoneOutlined style={{ fontSize: '24px', display: 'block', margin: '0 auto' }} />} 
+        <Button
+          icon={<PhoneOutlined />}
           block
-          style={{ textAlign: 'center', fontSize: '14px', marginBottom: '10px' }}
-        >
+        />
           Nạp tiền điện thoại
-        </Button>
       </Col>
       <Col span={6}>
-        <Button 
-          icon={<CoffeeOutlined style={{ fontSize: '24px', display: 'block', margin: '0 auto' }} />} 
+        <Button
+          icon={<CoffeeOutlined />}
           block
-          style={{ textAlign: 'center', fontSize: '14px', marginBottom: '10px' }}
-        >
+        />
           Mua vé xem phim
-        </Button>
       </Col>
       <Col span={6}>
-        <Button 
-          icon={<AppstoreAddOutlined style={{ fontSize: '24px', display: 'block', margin: '0 auto' }} />} 
+        <Button
+          icon={<AppstoreAddOutlined />}
           block
-          style={{ textAlign: 'center', fontSize: '14px', marginBottom: '10px' }}
-        >
+        />
           Du lịch - Đi lại
-        </Button>
       </Col>
     </Row>
   );

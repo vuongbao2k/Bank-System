@@ -1,0 +1,25 @@
+.function-icons {
+  .ant-col {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 8px;
+    padding-right: 8px;
+    flex-direction: column;
+  }
+  .ant-btn {
+    text-align: center;
+    font-size: 14px;
+    margin-bottom: 10px;
+    border-radius: 50%; // Tạo hình tròn cho các button
+    height: 80px; // Chiều cao của button
+    width: 80px; // Đảm bảo button có chiều rộng bằng chiều cao
+    display: flex;
+    flex-direction: column; // Đặt icon và text theo cột
+    justify-content: center; // Căn giữa icon và text
+
+    .anticon {
+      font-size: 36px; // Cỡ chữ của icon
+    }
+  }
+}

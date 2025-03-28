@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Button, Modal, Form, Input, Select, Switch, message } from 'antd';
 import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
-import { CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
+import { CheckCircleOutlined, CloseCircleOutlined, SearchOutlined } from '@ant-design/icons';
 import UserService from '../../services/UserService';
-import './UserManagementPage.scss'
+import './UserManagementPage.scss';
 
 const { Option } = Select;
 
 function UserManagementPage() {
   const [users, setUsers] = useState([]);
+  const [filteredUsers, setFilteredUsers] = useState([]);  // State lưu trữ dữ liệu đã lọc
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
   const [form] = Form.useForm();
+  const [searchTerm, setSearchTerm] = useState(''); // Lưu giá trị tìm kiếm
 
   // Hàm lấy danh sách người dùng từ API
   const fetchUsers = async () => {
@@ -19,6 +21,7 @@ function UserManagementPage() {
       const response = await UserService.getAllUsers();
       if (response) {
         setUsers(response.ourUsersList);
+        setFilteredUsers(response.ourUsersList); // Lưu danh sách ban đầu vào filteredUsers
       }
     } catch (error) {
       console.error('Lỗi khi lấy danh sách người dùng:', error);
@@ -29,6 +32,21 @@ function UserManagementPage() {
   useEffect(() => {
     fetchUsers();
   }, []);
+
+  // Hàm tìm kiếm người dùng theo username hoặc email
+  const handleSearch = (e) => {
+    const value = e.target.value;
+    setSearchTerm(value);  // Cập nhật giá trị tìm kiếm
+    if (value) {
+      const filtered = users.filter((user) => 
+        user.username.toLowerCase().includes(value.toLowerCase()) || 
+        user.email.toLowerCase().includes(value.toLowerCase())
+      );
+      setFilteredUsers(filtered);
+    } else {
+      setFilteredUsers(users); // Nếu không có gì tìm kiếm, hiển thị tất cả người dùng
+    }
+  };
 
   // Hàm xử lý mở modal thêm/sửa người dùng
   const handleAddOrEdit = (user) => {
@@ -54,12 +72,14 @@ function UserManagementPage() {
           user.id === currentUser.id ? { ...user, ...values } : user
         );
         setUsers(updatedUsers);
+        setFilteredUsers(updatedUsers);  // Cập nhật dữ liệu đã lọc sau khi cập nhật người dùng
         message.success('Cập nhật người dùng thành công!');
       } else {
         // Thêm người dùng mới
         await UserService.register(values);
         const newUser = { ...values, id: users.length + 1 };
         setUsers([...users, newUser]);
+        setFilteredUsers([...users, newUser]); // Cập nhật dữ liệu đã lọc sau khi thêm người dùng
         message.success('Thêm người dùng thành công!');
       }
       setIsModalVisible(false);
@@ -80,7 +100,9 @@ function UserManagementPage() {
       onOk: async () => {
         try {
           await UserService.deleteUser(userId); // API để xóa người dùng
-          setUsers(users.filter(user => user.id !== userId));
+          const updatedUsers = users.filter(user => user.id !== userId);
+          setUsers(updatedUsers);
+          setFilteredUsers(updatedUsers);  // Cập nhật dữ liệu đã lọc sau khi xóa người dùng
           message.success('Xóa người dùng thành công!');
         } catch (error) {
           console.error('Lỗi khi xóa người dùng:', error);
@@ -151,19 +173,29 @@ function UserManagementPage() {
         <h2>Quản lý người dùng</h2>
       </div>
       <div className="container">
+        {/* Thanh tìm kiếm */}
+        <Input
+          size="large"
+          placeholder="Tìm kiếm theo Username hoặc Email"
+          value={searchTerm}
+          onChange={handleSearch}
+          style={{ marginBottom: 20, width: '100%', maxWidth: '400px' }}
+          prefix={<SearchOutlined />}
+        />
         <Button
+          size="large"
           type="primary"
           icon={<PlusOutlined />}
           onClick={() => handleAddOrEdit(null)}
-          style={{ marginBottom: 20 }}
+          style={{ margin: 20 }}
         >
           Thêm người dùng
         </Button>
         <Table
           columns={columns}
-          dataSource={users}
+          dataSource={filteredUsers}  // Hiển thị dữ liệu đã lọc
           rowKey="id"
-          pagination={false}
+          pagination={{ pageSize: 5 }}
         />
         <Modal
           title={currentUser ? 'Sửa người dùng' : 'Thêm người dùng'}

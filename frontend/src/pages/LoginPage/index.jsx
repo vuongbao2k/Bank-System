@@ -22,7 +22,7 @@ const LoginPage = () => {
       localStorage.setItem('token', data.token);
       localStorage.setItem('refreshToken', data.refreshToken);
       localStorage.setItem('role', data.role);
-      navigate('/');
+      navigate('/profile');
     } catch (error) {
       message.error(error.message || 'Đăng nhập thất bại!');
     } finally {

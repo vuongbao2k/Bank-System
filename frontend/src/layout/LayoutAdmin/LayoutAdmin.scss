@@ -61,7 +61,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #00bfff;
+    // background-color: #00bfff;
+    background-image: linear-gradient(to bottom, #00bfff , #aeeafd);
     position: fixed;
     bottom: 20px; /* Cách lề dưới một chút */
     left: 50%;
@@ -85,7 +86,7 @@
     .icon-text {
       margin-top: 5px;
       color: white;
-      font-size: 12px;
+      font-size: 15px;
     }
 
     &.qr-icon {
